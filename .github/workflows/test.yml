@@ -1,11 +1,12 @@
-# This workflow will build a Java project with Maven, and cache/restore dependencies
-# It will also run Trivy scans for vulnerabilities.
-
 name: Test CICD
 
 on:
   push:
     branches: [ "main" ]
+
+permissions:
+  contents: read
+  security-events: write
 
 jobs:
   compile:
@@ -37,7 +38,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y trivy
 
-      # Build project so target/ exists
       - name: Build with Maven (package)
         run: mvn -B package --file pom.xml
 
